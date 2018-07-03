@@ -1,0 +1,28 @@
+{
+  "name": "heap-ts",
+  "version": "0.0.1",
+  "description": "Heap implementation in TypeScript",
+  "author": "Steve Ripberger",
+  "license": "UNLICENSED",
+  "main": "dist/lib/index.js",
+  "scripts": {
+    "build": "rm -rf dist && tsc",
+    "run-unit": "mocha dist/test/setup.js dist/test/unit || exit 0",
+    "run-integration": "mocha -- dist/test/setup.js dist/test/integration || exit 0",
+    "unit": "npm run build && npm run run-unit",
+    "integration": "npm run build && npm run run-integration",
+    "test": "npm run build && (npm run run-unit; npm run run-integration)"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.1.4",
+    "@types/mocha": "^5.2.4",
+    "@types/node": "^10.5.1",
+    "@types/sinon": "^5.0.1",
+    "@types/sinon-chai": "^3.2.0",
+    "chai": "^4.1.2",
+    "mocha": "^5.2.0",
+    "sinon": "^6.0.1",
+    "sinon-chai": "^3.2.0",
+    "typescript": "^2.9.2"
+  }
+}
