@@ -1,7 +1,7 @@
 import * as _ from 'lodash';
 import { getParentIndex, getChildIndexes } from './utils';
 
-export default class BTree<T> extends Array<T> {
+export default class HeapTree<T> extends Array<T> {
 	getSmallerChildIndex(index: number, compare: Function): number | null {
 		let childIndexes = getChildIndexes(index);
 		let children = _(childIndexes).map((i) => this[i]).filter().value();
