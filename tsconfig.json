@@ -3,7 +3,7 @@
     "module": "commonjs",
     "outDir": "dist",
     "target": "es2017",
-    "allowSyntheticDefaultImports": true
+    "strictNullChecks": true
   },
   "include": [
     "lib/**/*",
