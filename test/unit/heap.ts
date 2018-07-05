@@ -40,4 +40,22 @@ describe('Heap', function() {
 			expect(siftUp).to.be.calledWith(2, heap.compare);
 		});
 	});
+
+	describe('#pop', function() {
+		it('invokes tree.prePop, sifts down from the top, then returns prePop result', function() {
+			let heap = new Heap<string>();
+			let prePop = sinon.stub(heap.tree, 'prePop').returns('foo');
+			let siftDown = sinon.stub(heap.tree, 'siftDown');
+
+			let result = heap.pop();
+
+			expect(prePop).to.be.calledOnce;
+			expect(prePop).to.be.calledOn(heap.tree);
+			expect(siftDown).to.be.calledOnce;
+			expect(siftDown).to.be.calledOn(heap.tree);
+			expect(siftDown).to.be.calledWith(0, heap.compare);
+			expect(siftDown).to.be.calledAfter(prePop);
+			expect(result).to.equal('foo');
+		});
+	});
 });

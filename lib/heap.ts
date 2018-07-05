@@ -14,4 +14,10 @@ export default class Heap<T> {
 		this.tree.push(item);
 		this.tree.siftUp(this.tree.length - 1, this.compare);
 	}
+
+	pop(): T | null {
+		let item = this.tree.prePop();
+		this.tree.siftDown(0, this.compare);
+		return item;
+	}
 }
