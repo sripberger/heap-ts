@@ -26,4 +26,8 @@ export default class Heap<T> {
 		this.tree.siftDown(0, this.compare);
 		return result;
 	}
+
+	update(item: T): void {
+		this.tree.update(this.tree.indexOf(item), this.compare);
+	}
 }

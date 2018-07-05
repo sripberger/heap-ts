@@ -74,4 +74,17 @@ describe('Heap', function() {
 			expect(result).to.equal('A');
 		});
 	});
+
+	describe('#update', function() {
+		it('invokes tree.update at index of provided item', function() {
+			let update = sinon.stub(heap.tree, 'update');
+			heap.tree.push('A', 'B', 'C');
+
+			heap.update('B');
+
+			expect(update).to.be.calledOnce;
+			expect(update).to.be.calledOn(heap.tree);
+			expect(update).to.be.calledWith(1, compare);
+		});
+	});
 });
