@@ -222,6 +222,24 @@ describe('HeapTree', function() {
 		});
 	});
 
+	describe('#update', function() {
+		it('invokes siftUp and siftDown at provided index', function() {
+			let tree = new HeapTree<string>();
+			let compare = () => {};
+			let siftUp = sinon.stub(tree, 'siftUp');
+			let siftDown = sinon.stub(tree, 'siftDown');
+
+			tree.update(3, compare);
+
+			expect(siftUp).to.be.calledOnce;
+			expect(siftUp).to.be.calledOn(tree);
+			expect(siftUp).to.be.calledWith(3, compare);
+			expect(siftDown).to.be.calledOnce;
+			expect(siftDown).to.be.calledOn(tree);
+			expect(siftDown).to.be.calledWith(3, compare);
+		});
+	});
+
 	describe('#prePop', function() {
 		it('replaces top with bottom, returning original top', function() {
 			let tree = new HeapTree('A', 'B', 'C');

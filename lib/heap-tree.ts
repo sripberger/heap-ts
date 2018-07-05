@@ -52,6 +52,11 @@ export default class HeapTree<T> extends Array<T> {
 		}
 	}
 
+	update(index: number, compare:Function): void {
+		this.siftUp(index, compare);
+		this.siftDown(index, compare);
+	}
+
 	prePop(): T | null {
 		if (!this.length) return null;
 		let [ top ] = this;
