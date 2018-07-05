@@ -60,9 +60,10 @@ export default class HeapTree<T> extends Array<T> {
 		return top;
 	}
 
-	replaceTop(item: T): T {
+	replaceTop(item: T, compare:Function): T {
 		if (!this.length) return item;
 		let [ top ] = this;
+		if (compare(item, top) <= 0) return item;
 		this[0] = item;
 		return top;
 	}
