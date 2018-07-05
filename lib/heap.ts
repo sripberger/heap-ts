@@ -20,4 +20,10 @@ export default class Heap<T> {
 		this.tree.siftDown(0, this.compare);
 		return item;
 	}
+
+	pushPop(item: T): T {
+		let result = this.tree.replaceTop(item, this.compare);
+		this.tree.siftDown(0, this.compare);
+		return result;
+	}
 }

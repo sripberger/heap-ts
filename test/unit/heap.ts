@@ -41,8 +41,8 @@ describe('Heap', function() {
 	});
 
 	describe('#pop', function() {
-		it('invokes tree.prePop, sifts down from the top, then returns prePop result', function() {
-			let prePop = sinon.stub(heap.tree, 'prePop').returns('foo');
+		it('sifts down from the top after tree.prePop, returning result', function() {
+			let prePop = sinon.stub(heap.tree, 'prePop').returns('A');
 			let siftDown = sinon.stub(heap.tree, 'siftDown');
 
 			let result = heap.pop();
@@ -53,7 +53,25 @@ describe('Heap', function() {
 			expect(siftDown).to.be.calledOn(heap.tree);
 			expect(siftDown).to.be.calledWith(0, compare);
 			expect(siftDown).to.be.calledAfter(prePop);
-			expect(result).to.equal('foo');
+			expect(result).to.equal('A');
+		});
+	});
+
+	describe('#pushPop', function() {
+		it('sifts down from top after tree.replaceTop, returning result', function() {
+			let replaceTop = sinon.stub(heap.tree, 'replaceTop').returns('A');
+			let siftDown = sinon.stub(heap.tree, 'siftDown');
+
+			let result = heap.pushPop('B');
+
+			expect(replaceTop).to.be.calledOnce;
+			expect(replaceTop).to.be.calledOn(heap.tree);
+			expect(replaceTop).to.be.calledWith('B', compare);
+			expect(siftDown).to.be.calledOnce;
+			expect(siftDown).to.be.calledOn(heap.tree);
+			expect(siftDown).to.be.calledWith(0, compare);
+			expect(siftDown).to.be.calledAfter(replaceTop);
+			expect(result).to.equal('A');
 		});
 	});
 });
