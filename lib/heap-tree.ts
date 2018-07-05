@@ -51,4 +51,12 @@ export default class HeapTree<T> extends Array<T> {
 			index = this.siftDownOnce(index, compare);
 		}
 	}
+
+	prePop(): T | null {
+		if (!this.length) return null;
+		let [ top ] = this;
+		let bottom = this.pop();
+		if (this.length) this[0] = bottom as T;
+		return top;
+	}
 }

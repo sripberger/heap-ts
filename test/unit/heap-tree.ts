@@ -221,4 +221,42 @@ describe('HeapTree', function() {
 			expect(siftDownOnce.thirdCall).to.be.calledWith(3, compare);
 		});
 	});
+
+	describe('#prePop', function() {
+		it('replaces top with bottom, returning original top', function() {
+			let tree = new HeapTree('A', 'B', 'C');
+
+			let result = tree.prePop();
+
+			expect(tree).to.deep.equal(['C', 'B']);
+			expect(result).to.equal('A');
+		});
+
+		it('correctly handles single remaining element', function() {
+			let tree = new HeapTree('A');
+
+			let result = tree.prePop();
+
+			expect(tree).to.be.empty;
+			expect(result).to.equal('A');
+		});
+
+		it('returns null if tree is empty', function() {
+			let tree = new HeapTree();
+
+			let result = tree.prePop();
+
+			expect(tree).to.be.empty;
+			expect(result).to.be.null;
+		});
+
+		it('correctly handles undefined as an item', function() {
+			let tree = new HeapTree<any>('A', undefined);
+
+			let result = tree.prePop();
+
+			expect(tree).to.deep.equal([ undefined ]);
+			expect(result).to.equal('A');
+		});
+	});
 });

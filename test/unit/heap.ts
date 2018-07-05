@@ -27,7 +27,7 @@ describe('Heap', function() {
 	});
 
 	describe('#push', function() {
-		it('appends to the tree, then sifts up from the end', function() {
+		it('appends to the tree, then sifts up from the bottom', function() {
 			let heap = new Heap<string>();
 			let siftUp = sinon.stub(heap.tree, 'siftUp');
 			heap.tree.push('A', 'B');
