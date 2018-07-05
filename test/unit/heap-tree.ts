@@ -251,11 +251,31 @@ describe('HeapTree', function() {
 		});
 
 		it('correctly handles undefined as an item', function() {
-			let tree = new HeapTree<any>('A', undefined);
+			let tree = new HeapTree('A', undefined);
 
 			let result = tree.prePop();
 
 			expect(tree).to.deep.equal([ undefined ]);
+			expect(result).to.equal('A');
+		});
+	});
+
+	describe('#replaceTop', function() {
+		it('replaces top with the provided item and returns top', function() {
+			let tree = new HeapTree('A', 'B');
+
+			let result = tree.replaceTop('C');
+
+			expect(tree).to.deep.equal([ 'C', 'B' ]);
+			expect(result).to.equal('A');
+		});
+
+		it('returns provided item without changing tree if tree is empty', function() {
+			let tree = new HeapTree();
+
+			let result = tree.replaceTop('A');
+
+			expect(tree).to.be.empty;
 			expect(result).to.equal('A');
 		});
 	});
