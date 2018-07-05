@@ -72,4 +72,8 @@ export default class HeapTree<T> extends Array<T> {
 		this[0] = item;
 		return top;
 	}
+
+	replace(index: number, item: T): void {
+		this[index] = item;
+	}
 }

@@ -331,4 +331,14 @@ describe('HeapTree', function() {
 			expect(result).to.equal('A');
 		});
 	});
+
+	describe('#replace', function() {
+		it('replaces the item at index with provided item', function() {
+			let tree = new HeapTree('A', 'B', 'C');
+
+			tree.replace(1, 'D');
+
+			expect(tree).to.deep.equal([ 'A', 'D', 'C' ]);
+		});
+	});
 });
