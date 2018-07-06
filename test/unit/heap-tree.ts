@@ -187,7 +187,7 @@ describe('HeapTree', function() {
 	describe('#siftUp', function() {
 		it('invokes siftUpOnce with each new index until it returns null', function() {
 			let tree = new HeapTree();
-			let compare = () => {};
+			let compare = (_a: string, _b: string) => 0;
 			let siftUpOnce = sinon.stub(tree, 'siftUpOnce')
 				.onFirstCall().returns(1)
 				.onSecondCall().returns(0)
@@ -206,7 +206,7 @@ describe('HeapTree', function() {
 	describe('#siftDown', function() {
 		it('invokes siftDownOnce with each new index until it returns null', function() {
 			let tree = new HeapTree();
-			let compare = () => {};
+			let compare = (_a: string, _b: string) => 0;
 			let siftDownOnce = sinon.stub(tree, 'siftDownOnce')
 				.onFirstCall().returns(1)
 				.onSecondCall().returns(3)
@@ -225,7 +225,7 @@ describe('HeapTree', function() {
 	describe('#update', function() {
 		it('invokes siftUp and siftDown at provided index', function() {
 			let tree = new HeapTree<string>();
-			let compare = () => {};
+			let compare = (_a: string, _b: string) => 0;
 			let siftUp = sinon.stub(tree, 'siftUp');
 			let siftDown = sinon.stub(tree, 'siftDown');
 

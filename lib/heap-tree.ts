@@ -2,15 +2,21 @@ import * as _ from 'lodash';
 import { getParentIndex, getChildIndexes } from './utils';
 
 export default class HeapTree<T> extends Array<T> {
-	getSmallerChildIndex(index: number, compare: Function): number | null {
+	getSmallerChildIndex(
+		index: number,
+		compare: CompareFunction<T>
+	): number | null {
 		let childIndexes = getChildIndexes(index);
 		let children = _(childIndexes).map((i) => this[i]).filter().value();
 		if (children.length === 0) return null;
 		if (children.length === 1) return childIndexes[0];
-		return childIndexes[(compare(...children) <= 0) ? 0 : 1];
+		return childIndexes[(compare(children[0], children[1]) <= 0) ? 0 : 1];
 	}
 
-	siftUpOnce(index: number, compare: Function): number | null {
+	siftUpOnce(
+		index: number,
+		compare: CompareFunction<T>
+	): number | null {
 		let parentIndex = getParentIndex(index);
 		if (parentIndex !== null) {
 			let item = this[index];
@@ -24,7 +30,7 @@ export default class HeapTree<T> extends Array<T> {
 		return null;
 	}
 
-	siftDownOnce(index: number, compare: Function): number | null {
+	siftDownOnce(index: number, compare: CompareFunction<T>): number | null {
 		let childIndex = this.getSmallerChildIndex(index, compare);
 		if (childIndex !== null) {
 			let item = this[index];
@@ -38,21 +44,21 @@ export default class HeapTree<T> extends Array<T> {
 		return null;
 	}
 
-	siftUp(start: number, compare: Function): void {
+	siftUp(start: number, compare: CompareFunction<T>): void {
 		let index: number | null = start;
 		while (index !== null) {
 			index = this.siftUpOnce(index, compare);
 		}
 	}
 
-	siftDown(start: number, compare: Function): void {
+	siftDown(start: number, compare: CompareFunction<T>): void {
 		let index: number | null = start;
 		while (index !== null) {
 			index = this.siftDownOnce(index, compare);
 		}
 	}
 
-	update(index: number, compare:Function): void {
+	update(index: number, compare: CompareFunction<T>): void {
 		this.siftUp(index, compare);
 		this.siftDown(index, compare);
 	}
@@ -65,7 +71,7 @@ export default class HeapTree<T> extends Array<T> {
 		return top;
 	}
 
-	replaceTopIfLarger(item: T, compare:Function): T {
+	replaceTopIfLarger(item: T, compare: CompareFunction<T>): T {
 		if (!this.length) return item;
 		let [ top ] = this;
 		if (compare(item, top) <= 0) return item;

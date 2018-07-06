@@ -5,11 +5,11 @@ import HeapTree from '../../lib/heap-tree';
 import * as utils from '../../lib/utils';
 
 describe('Heap', function() {
-	let compare: Function;
+	let compare: CompareFunction<string>;
 	let heap: Heap<string>;
 
 	beforeEach(function() {
-		compare = () => {};
+		compare = (_a:string, _b:string) => 0;
 		heap = new Heap<string>(compare);
 	});
 

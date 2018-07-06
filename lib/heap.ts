@@ -2,10 +2,10 @@ import HeapTree from './heap-tree';
 import { defaultCompare } from './utils';
 
 export default class Heap<T> {
-	compare: Function;
+	compare: CompareFunction<T>;
 	tree: HeapTree<T>;
 
-	constructor(compare: Function = defaultCompare) {
+	constructor(compare: CompareFunction<T> = defaultCompare) {
 		this.compare = compare;
 		this.tree = new HeapTree<T>();
 	}
