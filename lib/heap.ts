@@ -37,7 +37,7 @@ export default class Heap<T> {
 		this.tree.update(itemIndex, this.compare);
 	}
 
-	_getItemIndex(item: T) {
+	private _getItemIndex(item: T) {
 		let itemIndex = this.tree.indexOf(item);
 		if (itemIndex !== -1) return itemIndex;
 		throw new Error(`Item ${item} not found in heap.`);
