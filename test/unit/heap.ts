@@ -87,4 +87,22 @@ describe('Heap', function() {
 			expect(update).to.be.calledWith(1, compare);
 		});
 	});
+
+	describe('#replace', function() {
+		it('replaces item with another and updates its position', function() {
+			let replace = sinon.stub(heap.tree, 'replace');
+			let update = sinon.stub(heap.tree, 'update');
+			heap.tree.push('A', 'B', 'C');
+
+			heap.replace('B', 'D');
+
+			expect(replace).to.be.calledOnce;
+			expect(replace).to.be.calledOn(heap.tree);
+			expect(replace).to.be.calledWith(1, 'D');
+			expect(update).to.be.calledOnce;
+			expect(update).to.be.calledOn(heap.tree);
+			expect(update).to.be.calledWith(1, compare);
+			expect(update).to.be.calledAfter(replace);
+		});
+	});
 });
