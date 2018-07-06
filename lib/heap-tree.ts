@@ -57,7 +57,7 @@ export default class HeapTree<T> extends Array<T> {
 		this.siftDown(index, compare);
 	}
 
-	prePop(): T | null {
+	moveBottomToTop(): T | null {
 		if (!this.length) return null;
 		let [ top ] = this;
 		let bottom = this.pop();
@@ -65,7 +65,7 @@ export default class HeapTree<T> extends Array<T> {
 		return top;
 	}
 
-	replaceTop(item: T, compare:Function): T {
+	replaceTopIfLarger(item: T, compare:Function): T {
 		if (!this.length) return item;
 		let [ top ] = this;
 		if (compare(item, top) <= 0) return item;

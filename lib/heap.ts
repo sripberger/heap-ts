@@ -16,13 +16,13 @@ export default class Heap<T> {
 	}
 
 	pop(): T | null {
-		let item = this.tree.prePop();
+		let item = this.tree.moveBottomToTop();
 		this.tree.siftDown(0, this.compare);
 		return item;
 	}
 
 	pushPop(item: T): T {
-		let result = this.tree.replaceTop(item, this.compare);
+		let result = this.tree.replaceTopIfLarger(item, this.compare);
 		this.tree.siftDown(0, this.compare);
 		return result;
 	}

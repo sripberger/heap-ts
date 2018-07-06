@@ -240,11 +240,11 @@ describe('HeapTree', function() {
 		});
 	});
 
-	describe('#prePop', function() {
+	describe('#moveBottomToTop', function() {
 		it('replaces top with bottom, returning original top', function() {
 			let tree = new HeapTree('A', 'B', 'C');
 
-			let result = tree.prePop();
+			let result = tree.moveBottomToTop();
 
 			expect(tree).to.deep.equal(['C', 'B']);
 			expect(result).to.equal('A');
@@ -253,7 +253,7 @@ describe('HeapTree', function() {
 		it('correctly handles single remaining element', function() {
 			let tree = new HeapTree('A');
 
-			let result = tree.prePop();
+			let result = tree.moveBottomToTop();
 
 			expect(tree).to.be.empty;
 			expect(result).to.equal('A');
@@ -262,7 +262,7 @@ describe('HeapTree', function() {
 		it('returns null if tree is empty', function() {
 			let tree = new HeapTree();
 
-			let result = tree.prePop();
+			let result = tree.moveBottomToTop();
 
 			expect(tree).to.be.empty;
 			expect(result).to.be.null;
@@ -271,14 +271,14 @@ describe('HeapTree', function() {
 		it('correctly handles undefined as an item', function() {
 			let tree = new HeapTree('A', undefined);
 
-			let result = tree.prePop();
+			let result = tree.moveBottomToTop();
 
 			expect(tree).to.deep.equal([ undefined ]);
 			expect(result).to.equal('A');
 		});
 	});
 
-	describe('#replaceTop', function() {
+	describe('#replaceTopIfLarger', function() {
 		let tree: HeapTree<string>;
 		let compare: sinon.SinonStub;
 
@@ -288,7 +288,7 @@ describe('HeapTree', function() {
 		});
 
 		it('compares top with the provided item', function() {
-			tree.replaceTop('C', compare);
+			tree.replaceTopIfLarger('C', compare);
 
 			expect(compare).to.be.calledOnce;
 			expect(compare).to.be.calledWith('C', 'A');
@@ -297,7 +297,7 @@ describe('HeapTree', function() {
 		it('replaces top with item and returns top, if item is larger', function() {
 			compare.returns(1);
 
-			let result = tree.replaceTop('C', compare);
+			let result = tree.replaceTopIfLarger('C', compare);
 
 			expect(tree).to.deep.equal([ 'C', 'B' ]);
 			expect(result).to.equal('A');
@@ -306,7 +306,7 @@ describe('HeapTree', function() {
 		it('returns item without changing tree, if item is equal', function() {
 			compare.returns(0)
 
-			let result = tree.replaceTop('C', compare);
+			let result = tree.replaceTopIfLarger('C', compare);
 
 			expect(tree).to.deep.equal([ 'A', 'B' ]);
 			expect(result).to.equal('C');
@@ -315,7 +315,7 @@ describe('HeapTree', function() {
 		it('returns item without changing tree, if item is smaller', function() {
 			compare.returns(-1);
 
-			let result = tree.replaceTop('C', compare);
+			let result = tree.replaceTopIfLarger('C', compare);
 
 			expect(tree).to.deep.equal([ 'A', 'B' ]);
 			expect(result).to.equal('C');
@@ -324,7 +324,7 @@ describe('HeapTree', function() {
 		it('returns provided item without comparing is empty', function() {
 			tree = new HeapTree();
 
-			let result = tree.replaceTop('A', compare);
+			let result = tree.replaceTopIfLarger('A', compare);
 
 			expect(compare).to.not.be.called;
 			expect(tree).to.be.empty;
