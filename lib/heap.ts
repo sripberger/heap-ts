@@ -28,13 +28,18 @@ export default class Heap<T> {
 	}
 
 	update(item: T): void {
-		let itemIndex = this.tree.indexOf(item);
+		this.tree.update( this._getItemIndex(item), this.compare);
+
+	}
+	replace(item: T, newItem: T): void {
+		let itemIndex = this._getItemIndex(item);
+		this.tree.replace(itemIndex, newItem);
 		this.tree.update(itemIndex, this.compare);
 	}
 
-	replace(item: T, newItem: T): void {
+	_getItemIndex(item: T) {
 		let itemIndex = this.tree.indexOf(item);
-		this.tree.replace(itemIndex, newItem);
-		this.tree.update(itemIndex, this.compare);
+		if (itemIndex !== -1) return itemIndex;
+		throw new Error(`Item ${item} not found in heap.`);
 	}
 }

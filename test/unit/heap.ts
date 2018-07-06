@@ -76,24 +76,43 @@ describe('Heap', function() {
 	});
 
 	describe('#update', function() {
-		it('invokes tree.update at index of provided item', function() {
-			let update = sinon.stub(heap.tree, 'update');
-			heap.tree.push('A', 'B', 'C');
+		let update: sinon.SinonStub;
 
+		beforeEach(function() {
+			heap.tree.push('A', 'B', 'C');
+			update = sinon.stub(heap.tree, 'update');
+		});
+
+		it('invokes tree.update at index of provided item', function() {
 			heap.update('B');
 
 			expect(update).to.be.calledOnce;
 			expect(update).to.be.calledOn(heap.tree);
 			expect(update).to.be.calledWith(1, compare);
 		});
+
+		it('throws if item is not found in tree', function() {
+			expect(() => {
+				heap.update('D');
+			}).to.throw(Error).which.satisfies((err) => {
+				expect(err.message).to.equal('Item D not found in heap.');
+				expect(update).to.not.be.called;
+				return true;
+			});
+		});
 	});
 
 	describe('#replace', function() {
-		it('replaces item with another and updates its position', function() {
-			let replace = sinon.stub(heap.tree, 'replace');
-			let update = sinon.stub(heap.tree, 'update');
-			heap.tree.push('A', 'B', 'C');
+		let replace: sinon.SinonStub;
+		let update: sinon.SinonStub;
 
+		beforeEach(function() {
+			heap.tree.push('A', 'B', 'C');
+			replace = sinon.stub(heap.tree, 'replace');
+			update = sinon.stub(heap.tree, 'update');
+		});
+
+		it('replaces item with another and updates its position', function() {
 			heap.replace('B', 'D');
 
 			expect(replace).to.be.calledOnce;
@@ -103,6 +122,17 @@ describe('Heap', function() {
 			expect(update).to.be.calledOn(heap.tree);
 			expect(update).to.be.calledWith(1, compare);
 			expect(update).to.be.calledAfter(replace);
+		});
+
+		it('throws if item is not found in tree', function() {
+			expect(() => {
+				heap.replace('D', 'E');
+			}).to.throw(Error).which.satisfies((err) => {
+				expect(err.message).to.equal('Item D not found in heap.');
+				expect(replace).to.not.be.called;
+				expect(update).to.not.be.called;
+				return true;
+			});
 		});
 	});
 });
