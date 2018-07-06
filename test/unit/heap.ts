@@ -26,6 +26,27 @@ describe('Heap', function() {
 		expect(heap.tree).to.be.empty;
 	});
 
+	describe('@length', function() {
+		it('returns number of items in tree', function() {
+			heap.tree.push('A', 'B', 'C');
+
+			expect(heap.length).to.equal(3);
+		});
+	});
+
+	describe('@isEmpty', function() {
+		it('returns true if and only if length is zero', function() {
+			let fooHeap = new Heap<string>(compare);
+			let barHeap = new Heap<string>(compare);
+			fooHeap.tree.push('A');
+			barHeap.tree.push('A', 'B');
+
+			expect(heap.isEmpty).to.be.true;
+			expect(fooHeap.isEmpty).to.be.false;
+			expect(barHeap.isEmpty).to.be.false;
+		});
+	});
+
 	describe('#push', function() {
 		it('appends to the tree, then sifts up from the bottom', function() {
 			let siftUp = sinon.stub(heap.tree, 'siftUp');

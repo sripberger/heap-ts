@@ -10,6 +10,14 @@ export default class Heap<T> {
 		this.tree = new HeapTree<T>();
 	}
 
+	get length(): number {
+		return this.tree.length;
+	}
+
+	get isEmpty(): boolean {
+		return this.length === 0;
+	}
+
 	push(item: T): void {
 		this.tree.push(item);
 		this.tree.siftUp(this.tree.length - 1, this.compare);

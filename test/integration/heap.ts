@@ -16,6 +16,10 @@ describe('Heap', function() {
 		heap.push('A');
 		heap.push('C');
 
+		// Check proeprties
+		expect(heap.length).to.equal(4);
+		expect(heap.isEmpty).to.be.false;
+
 		// Items should come off in ascending order...
 		expect(heap.pop()).to.equal('A');
 		expect(heap.pop()).to.equal('B');
@@ -26,6 +30,10 @@ describe('Heap', function() {
 		expect(heap.pop()).to.equal('C');
 		expect(heap.pop()).to.equal('D');
 		expect(heap.pop()).to.equal('E');
+
+		// Check properties again, now that heap is empty.
+		expect(heap.length).to.equal(0);
+		expect(heap.isEmpty).to.be.true;
 
 		// Popping from an empty heap returns null.
 		expect(heap.pop()).to.be.null;
